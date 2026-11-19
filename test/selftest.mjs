@@ -41,6 +41,10 @@ const lan = startLanServer({
   getInfo: () => INFO,
   listSessions: async () => [],
   runCommand: async () => ({}),
+  getAccountBalance: async () => ({
+    ok: true, rechargeBalance: 4.033629, bonusBalance: 0.985,
+    totalBalance: 5.018629, currency: 'CNY', balanceSource: 'account'
+  }),
   log: () => {}
 })
 const started = await lan.start()
@@ -139,6 +143,16 @@ const sessNoTok = await fetch(base + '/sessions')
 ok(sessNoTok.status === 401, '没访问码读会话被拒')
 console.log('')
 
+console.log('【6.5】DSH 原生账号余额（不需要 whale）')
+{
+  const noAuth = await fetch(base + '/balance.json')
+  ok(noAuth.status === 401, '余额接口没访问码必须 401')
+  const r = await fetch(base + '/balance.json?token=' + TOKEN)
+  const b = await r.json()
+  ok(r.status === 200 && b.ok && b.balanceSource === 'account', '余额走自有鉴权路由与账号登录态')
+  ok(b.rechargeBalance === 4.033629 && b.bonusBalance === 0.985, '充值与赠金钱包分别保留')
+}
+console.log('')
 console.log('【7】端口被占时必须报错，不许偷偷换端口')
 
 const COLLIDE_PORT = 18888
