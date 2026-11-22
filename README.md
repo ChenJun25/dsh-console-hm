@@ -275,4 +275,11 @@ dsh-console-hm/
 
 ---
 
-MIT License · 作者 CJ
+## 许可证
+
+本项目以 MIT 许可证发布，全文见 [LICENSE](LICENSE)。
+
+Copyright (c) 2026 CJ
+
+任何复制、修改、分发（包括二次发布到 npm 等包管理器、或作为其他产品的组成部分再发布）
+都必须保留上述版权声明与本许可声明。
